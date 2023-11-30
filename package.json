@@ -1,6 +1,6 @@
 {
   "name": "blb-ui-lib",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "An empty base template for publishing a React TS package to npmjs library.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -52,6 +52,7 @@
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.48.2",
     "rollup": "^3.29.2",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-delete": "^2.0.0",
