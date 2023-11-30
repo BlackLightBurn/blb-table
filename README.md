@@ -4,12 +4,12 @@ BlackLightBurn UI library started
 
 ## Installation
 
-1. **Install** Install blb-ui-lib:
+1. **Install** blb-ui-lib:
 ```
   npm install --save blb-ui-lib
 ```
 
-2. **Import components into your project**
+2. **Import** components into your project
 ```
   import { Button, SmartButton, useButtonStatus } from 'blb-ui-lib';
 ```
