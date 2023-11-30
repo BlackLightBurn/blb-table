@@ -1,5 +1,5 @@
 {
-  "name": "npm-react-typescript-template",
+  "name": "blb-ui-lib",
   "version": "1.0.7",
   "description": "An empty base template for publishing a React TS package to npmjs library.",
   "main": "dist/index.js",
@@ -13,19 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/helgastogova/npm-react-typescript-template"
+    "url": "https://github.com/BlackLightBurn/blb-ui-lib"
   },
   "keywords": [
     "react",
     "typescript",
     "bottom-sheet"
   ],
-  "author": "Olga Stogova <helgastogova@gmail.com>",
+  "author": "blacklightburn",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/helgastogova/npm-react-typescript-template/issues"
+    "url": "https://github.com/BlackLightBurn/blb-ui-lib/issues"
   },
-  "homepage": "https://github.com/helgastogova/npm-react-typescript-template#readme",
+  "homepage": "https://github.com/BlackLightBurn/blb-ui-lib#readme",
   "peerDependencies": {
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
