@@ -1,4 +1,5 @@
 import React from 'react';
+export { Button } from './components/Button';
 
 import s from './styles.module.css';
 
