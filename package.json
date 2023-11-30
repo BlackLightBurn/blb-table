@@ -1,6 +1,6 @@
 {
   "name": "blb-ui-lib",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "An empty base template for publishing a React TS package to npmjs library.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
