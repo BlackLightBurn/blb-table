@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Table as TableComponent } from 'react-bootstrap';
 
-import { useReactTable, getCoreRowModel, SortingState, ColumnDef } from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, SortingState } from '@tanstack/react-table';
 
 import { QueryParams } from '../types';
 import { Search } from './components/Search';
@@ -19,7 +19,8 @@ interface TableProps {
   isLoading: boolean;
   onChange: Dispatch<SetStateAction<QueryParams>>;
   limit: number;
-  columns: ColumnDef<object>[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  columns: any[];
   search?: string;
   components?: {
     Pagination?: (props: {

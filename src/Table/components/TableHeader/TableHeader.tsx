@@ -12,7 +12,6 @@ interface TableHeaderProps {
 }
 
 export const TableHeader = ({ colSpan, title, enableSorting = false, onClick, sorting }: TableHeaderProps) => {
-  console.log(colSpan);
   return (
     <th colSpan={colSpan} onClick={onClick}>
       <div className={enableSorting ? styles.clickable : ""}>
