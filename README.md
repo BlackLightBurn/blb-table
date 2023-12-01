@@ -92,8 +92,13 @@ export  default  function  Home() {
 ### Components API
 
 - **Pagination**?: *(props: { pageCount:  number; pageIndex:  number; setPageIndex: ({ selected }: { selected:  number }) =>  void; }) =>  React.ReactElement;*
+	> pageCount - total page count
+	> pageIndex - current index of page
+	> setPageIndex - function for set the page number 
 - **EmptyData**?: *(props: { isLoading:  boolean; isEmpty:  boolean }) =>  React.ReactElement;*
 - **Search**?: *(props: { resetPagination: () =>  void; openFilters: () =>  void; }) =>  React.ReactElement;*
+	> resetPagination - for reset pagination on first page
+	> openFilter - open/close filters 
 - **Filters**?: *(props: { resetPagination: () =>  void }) =>  React.ReactElement;*
 
 
