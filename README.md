@@ -1,6 +1,6 @@
-# BlackLightBurn UI Library
+# BlackLightBurn Table
 
-BlackLightBurn UI library started
+BlackLightBurn Table
 
 ## Installation
 

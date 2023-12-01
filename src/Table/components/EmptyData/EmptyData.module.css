@@ -1,0 +1,24 @@
+.wrapper {
+  width: 100%;
+  padding: 36px 12px;
+  background-color: var(--blb-table-white-color);
+  border-radius: 0;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--blb-table-black-color);
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--blb-table-black-color);
+}
