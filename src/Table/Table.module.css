@@ -5,4 +5,22 @@
 
 .tableWrapper table {
   margin-bottom: 0 !important;
+  width: 100%;
+  display: table;
+  caption-side: bottom;
+  border-collapse: collapse;
+  vertical-align: top;
+}
+
+.tableWrapper table tr {
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+}
+
+.tableWrapper table > :not(caption) > * > * {
+  padding: 0.5rem 0.5rem;
+  color: #000;
+  background-color: white;
+  border-bottom-width: 1px;
 }
