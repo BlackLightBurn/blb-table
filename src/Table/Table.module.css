@@ -2,3 +2,7 @@
   overflow-x: auto;
   width: 100%;
 }
+
+.tableWrapper table {
+  margin-bottom: 0 !important;
+}
