@@ -2,7 +2,6 @@
 
 BlackLightBurn table component
 
-
 ## Installation
 
 ```
@@ -10,97 +9,242 @@ npm install --save blb-table
 ```
 
 ## Import styles and use react-query
-Import styles in ``app.js`` and use ``QueryClientProvider``.
+
+Install `bootstrap`
 
 ```
-import  'blb-table/dist/variables.css';
-import  'bootstrap/dist/css/bootstrap.min.css';
+npm install --save bootstrap
+```
 
-import { QueryClient, QueryClientProvider } from 'react-query';
-const queryClient = new QueryClient();
+and import styles in `app.js` and use `QueryClientProvider`.
+
+```
+import 'blb-table/dist/variables.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App({ Component, pageProps }: any) {
-	return (
-		<QueryClientProvider client={queryClient}>
-			<Component {...pageProps} />
-		</QueryClientProvider>
-	);
+	return <Component {...pageProps} />;
 }
 ```
 
 ## Usage
 
 ```
-import { Table } from 'blb-table';
-import { useQuery } from 'react-query';
-import { influencersQuery } from  '@/queries/influencersQuery';
+// index.tsx
 
-interface QueryParams {
-	limit: number;
-	filter?: {
-		[key: string]: string | number | Array<number | null> | boolean;
-	};
-	search?: string;
-	skip: number;
-	sort: {
-		id: string;
-		desc: boolean;
-	}[];
-}
+import { Table, QueryParams, ColumnDef } from 'blb-table';
 
-export  default  function  Home() {
-	const [queryParams, setQueryParams] = useState<QueryParams>({
-		limit: 10,
-	});
+export default function Home() {
+    const [data, setData] = useState(() => initialData)
+    const [queryParams, setQueryParams] = useState<QueryParams>({
+        limit: 3,
+        sort: [{
+          id: 'title',
+          desc: false,
+        }],
+    });
 
-	const { data, isFetching } = useQuery(influencersQuery(queryParams));
-
-	const columns: = [
+	const columns: ColumnDef<DataProps>[] = [
 		{
 			accessorKey: 'title',
-			header: () => <span>Influencer</span>,
+			header: () => <span>Name</span>,
 			cell: (info) => info.getValue(),
 			enableSorting: false,
-		}
+		},
+		{
+			accessorKey: 'subscribers',
+			header: () => <span>Subscribers</span>,
+			cell: (info) => info.getValue(),
+			enableSorting: true,
+		},
+		{
+			accessorKey: 'views',
+			header: () => <span>Views</span>,
+			cell: (info) => info.getValue(),
+			enableSorting: true,
+		},
 	];
 
 	return (
 		<Table
 			data={data}
 			columns={columns}
-			isLoading={isFetching}
+			isLoading={false}
 			onChange={setQueryParams}
-			limit={queryParams.limit}
+			initialState={queryParams}
+			template={['50%', '30%', '20%']}
+			components={{
+          EmptyData: ({ isLoading, isEmpty }) => (
+            <EmptyData isLoading={isLoading} isEmpty={isEmpty} />
+          ),
+          Pagination: ({ pageCount, pageIndex, setPageIndex }) => (
+            <Pagination
+              pageCount={pageCount}
+              onChange={({ selected }) => {
+                setQueryParams((prev) => ({ ...prev, skip: queryParams.limit * selected }));
+                setPageIndex({ selected });
+              }}
+            />
+          ),
+          Search: ({ resetPagination, openFilters }) => (
+            <Search
+              onChange={(value) => {
+                setQueryParams((prev) => ({
+                  ...prev,
+                  search: value,
+                  skip: 0,
+                }));
+                resetPagination();
+              }}
+              openFilters={openFilters}
+            />
+          ),
+          Filters: ({ resetPagination }) => (
+            <FilterForm
+              onSubmit={(data) => {
+                setQueryParams((prev) => ({
+                  ...prev,
+                  filter: {
+                    ...prev.filter,
+                    ...data,
+                  },
+                  skip: 0,
+                }));
+                resetPagination();
+              }}
+            />
+          ),
+        }}
 		/>
 	)
 }
 ```
 
+```
+// Example FilterForm.tsx
+
+export const FilterForm = ({ onSubmit: _onSubmit }) => {
+  const onSubmit = (data) => {
+    let _data = {};
+    let viewsFrom;
+    let viewsTo;
+    if (data.target.name === 'viewsFrom') {
+      viewsFrom = data.target.value;
+    }
+    if (data.target.name === 'viewsTo') {
+      viewsTo = data.target.value;
+    }
+    _data = {
+      views: [viewsFrom ? Number(viewsFrom) : null, viewsTo ? Number(viewsTo) : null],
+    };
+
+    if (_onSubmit) _onSubmit(_data);
+  };
+  return (
+    <form onChange={onSubmit}>
+      <input name="viewsFrom"  />
+      <input name="viewsTo" />
+    </form>
+  );
+};
+```
+
+```
+// Example Search.tsx
+
+import { useState } from "react";
+
+interface SearchProps {
+  onChange: (value: string) => void;
+  openFilters: () => void;
+}
+
+export const Search = ({ onChange, openFilters }: SearchProps) => {
+  const [searchValue, setSearchValue] = useState('');
+  return (
+    <>
+    <input
+      value={searchValue}
+      onChange={(e) => {
+        setSearchValue(e.target.value);
+        onChange(e.target.value);
+      }}
+    />
+    <button type="button" onClick={openFilters}>open filters</button>
+    </>
+  )
+}
+```
+
+```
+// Example Pagination.tsx
+
+interface PaginationProps {
+  pageCount: number;
+  onChange: ({ selected }: { selected: number }) => void;
+}
+
+export const Pagination = ({ pageCount, onChange }: PaginationProps) => {
+  return (
+    <>
+      {Array.from({ length: pageCount }, (_, index) => 0 + index).map((item) => (
+        <button type="button" key={item} onClick={() => onChange({ selected: item })}>{item + 1}</button>
+      ))}
+    </>
+  );
+};
+```
+
+```
+// Example EmptyData.tsx
+
+interface EmptyDataProps {
+  isLoading: boolean;
+  isEmpty: boolean;
+}
+
+export const EmptyData = ({ isLoading, isEmpty }: EmptyDataProps) => {
+  if (isLoading) {
+    return 'Loading...'
+  }
+  return 'Empty';
+};
+```
+
 ## API
 
-- **data**: *{ data:  Array<object\>; count:  number; }*
-	 > Count is a total count of elements
-- **isLoading**: *boolean*
-- **onChange**:  *Dispatch<SetStateAction<QueryParams\>>*
-- **limit**: *number*
-	> Limit for pagination page size and for number of elements to display
-- **columns**: *any[]*
-- **search**?: *string*
-- **components**?: *{ components API }*
-	> For your custom components
+- **data**: _{ data: Array<object\>; count: number; }_
+  > Count is a total count of elements
+- **isLoading**: _boolean_
+- **onChange**: _Dispatch<SetStateAction<QueryParams\>>_
+- **initialState**: _{ limit: number; sort?: QueryParams['sort']}_
+  > Limit for pagination page size and for number of elements to display
+  > and default sort state
+- **columns**: _any[]_
+- **search**?: _string_
+- **template**?: _string[]_
+  > Defines the width of each column (in %). For example ['50%', '30%', '20%']
+- **components**?: _{ components API }_
+  > For your custom components
 
 ### Components API
 
-- **Pagination**?: *(props: { pageCount:  number; pageIndex:  number; setPageIndex: ({ selected }: { selected:  number }) =>  void; }) =>  React.ReactElement;*
-	> pageCount - total page count
-	> pageIndex - current index of page
-	> setPageIndex - function for set the page number 
-- **EmptyData**?: *(props: { isLoading:  boolean; isEmpty:  boolean }) =>  React.ReactElement;*
-- **Search**?: *(props: { resetPagination: () =>  void; openFilters: () =>  void; }) =>  React.ReactElement;*
-	> resetPagination - for reset pagination on first page
-	> openFilter - open/close filters 
-- **Filters**?: *(props: { resetPagination: () =>  void }) =>  React.ReactElement;*
+- **Pagination**?: _(props: { pageCount: number; pageIndex: number; setPageIndex: ({ selected }: { selected: number }) => void; }) => React.ReactElement;_
 
+  > pageCount - total page count
+
+  > pageIndex - current index of page
+
+  > setPageIndex - function for set the page number
+
+- **EmptyData**?: _(props: { isLoading: boolean; isEmpty: boolean }) => React.ReactElement;_
+- **Search**?: _(props: { resetPagination: () => void; openFilters: () => void; }) => React.ReactElement;_
+
+  > resetPagination - for reset pagination on first page
+
+  > openFilter - open/close filters
+
+- **Filters**?: _(props: { resetPagination: () => void }) => React.ReactElement;_
 
 ## Contributing
 
