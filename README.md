@@ -34,6 +34,10 @@ export default function App({ Component, pageProps }: any) {
 
 import { useState, useEffect } from 'react';
 import { Table, QueryParams, ColumnDef } from 'blb-table';
+import { EmptyData } from '@/components/EmptyData';
+import { Pagination } from '@/components/Pagination';
+import { Search } from '@/components/Search';
+import { FilterForm } from '@/components/FilterForm';
 
 interface InitialDataProps {
   title: string;
