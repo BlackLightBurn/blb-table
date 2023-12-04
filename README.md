@@ -32,7 +32,35 @@ export default function App({ Component, pageProps }: any) {
 ```
 // index.tsx
 
+import { useState, useEffect } from 'react';
 import { Table, QueryParams, ColumnDef } from 'blb-table';
+
+interface InitialDataProps {
+  title: string;
+  subscribers: number;
+  views: number;
+}
+
+const initialData = {
+  data: [
+    {
+      title: 'One',
+      subcribers: 1000,
+      views: 123,
+    },
+    {
+      title: 'Two',
+      subcribers: 2000,
+      views: 544,
+    },
+    {
+      title: 'Three',
+      subcribers: 3000,
+      views: 56626,
+    },
+  ],
+  count: 3
+};
 
 export default function Home() {
     const [data, setData] = useState(() => initialData)
@@ -44,7 +72,7 @@ export default function Home() {
         }],
     });
 
-	const columns: ColumnDef<DataProps>[] = [
+	const columns: ColumnDef<InitialDataProps>[] = [
 		{
 			accessorKey: 'title',
 			header: () => <span>Name</span>,
@@ -64,16 +92,28 @@ export default function Home() {
 			enableSorting: true,
 		},
 	];
+	
+     useEffect(() => {
+        setData((prevData) => {
+          const filtered = !queryParams.search
+            ? initialData.data
+            : prevData.data.filter((itm) => itm.title.includes(queryParams.search || ''));
+          return {
+            data: filtered,
+            count: filtered.length,
+          };
+        });
+      }, [queryParams]);
 
 	return (
-		<Table
-			data={data}
-			columns={columns}
-			isLoading={false}
-			onChange={setQueryParams}
-			initialState={queryParams}
-			template={['50%', '30%', '20%']}
-			components={{
+	  <Table
+	    data={data}
+		columns={columns}
+		isLoading={false}
+		onChange={setQueryParams}
+		initialState={queryParams}
+		template={['50%', '30%', '20%']}
+		components={{
           EmptyData: ({ isLoading, isEmpty }) => (
             <EmptyData isLoading={isLoading} isEmpty={isEmpty} />
           ),
@@ -115,7 +155,7 @@ export default function Home() {
             />
           ),
         }}
-		/>
+      />
 	)
 }
 ```
