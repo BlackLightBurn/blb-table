@@ -4,6 +4,7 @@
 }
 
 .tableWrapper table {
+  table-layout: fixed;
   margin-bottom: 0 !important;
   width: 100%;
   display: table;
