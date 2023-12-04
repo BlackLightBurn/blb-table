@@ -4,8 +4,8 @@ export interface QueryParams {
     [key: string]: string | number | Array<number | null> | boolean;
   };
   search?: string;
-  skip: number;
-  sort: {
+  skip?: number;
+  sort?: {
     id: string;
     desc: boolean;
   }[];

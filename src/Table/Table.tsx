@@ -18,7 +18,7 @@ interface TableProps {
   };
   isLoading: boolean;
   onChange: Dispatch<SetStateAction<QueryParams>>;
-  limit: number;
+  initialState: QueryParams;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: any[];
   search?: string;
@@ -41,17 +41,17 @@ export const Table = ({
   data,
   isLoading: _isLoading,
   onChange,
-  limit,
   columns,
   search,
   components,
+  initialState,
 }: TableProps) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>(initialState.sort || []);
   const [openFilters, setOpenFilters] = useState<boolean>(false);
   const table = useReactTable({
     data: data?.data ?? [],
     columns,
-    pageCount: data?.count ? Math.ceil(data.count / limit) : 0,
+    pageCount: data?.count ? Math.ceil(data.count / initialState.limit) : 0,
     state: {
       sorting,
     },
@@ -98,7 +98,7 @@ export const Table = ({
       pageCount={table.getPageCount()}
       initialPage={table.getState().pagination.pageIndex}
       onPageChange={({ selected }) => {
-        onChange((prev) => ({ ...prev, skip: limit * selected }));
+        onChange((prev) => ({ ...prev, skip: initialState.limit * selected }));
         table.setPageIndex(selected);
       }}
     />
