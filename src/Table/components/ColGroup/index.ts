@@ -1,0 +1,1 @@
+export { ColGroup } from './ColGroup';

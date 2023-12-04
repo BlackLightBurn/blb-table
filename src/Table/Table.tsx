@@ -10,6 +10,7 @@ import { EmptyData } from './components/EmptyData';
 import { THead } from './components/THead';
 import { TBody } from './components/TBody';
 import styles from './Table.module.css';
+import { ColGroup } from './components/ColGroup';
 
 interface TableProps {
   data: {
@@ -19,6 +20,7 @@ interface TableProps {
   isLoading: boolean;
   onChange: Dispatch<SetStateAction<QueryParams>>;
   initialState: QueryParams;
+  template?: string[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: any[];
   search?: string;
@@ -45,6 +47,7 @@ export const Table = ({
   search,
   components,
   initialState,
+  template,
 }: TableProps) => {
   const [sorting, setSorting] = useState<SortingState>(initialState.sort || []);
   const [openFilters, setOpenFilters] = useState<boolean>(false);
@@ -69,6 +72,7 @@ export const Table = ({
   let content = (
     <div className={styles.tableWrapper}>
       <TableComponent>
+        <ColGroup template={template} />
         <THead headerGroups={table.getHeaderGroups()} onChange={onChange} />
         <TBody rows={rows} />
       </TableComponent>
