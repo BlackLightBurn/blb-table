@@ -15,17 +15,18 @@ export const THead = ({ headerGroups, onChange }: THeadProps) => {
         <tr key={headerGroup.id}>
           {headerGroup.headers.map((header) => {
             const { enableSorting } = header.column.columnDef;
+            const sorting = header.column.getIsSorted();
             return (
               <TableHeader
                 key={header.id}
                 enableSorting={enableSorting}
                 colSpan={header.colSpan}
                 title={flexRender(header.column.columnDef.header, header.getContext())}
-                sorting={header.column.getIsSorted()}
+                sorting={sorting}
                 onClick={() => {
                   if (enableSorting) {
                     header.column.toggleSorting();
-                    const desc = header.column.getIsSorted() === "desc" ? true : false;
+                    const desc = sorting !== "desc" ? true : false;
                     onChange((prev) => ({
                       ...prev,
                       sort: [{ id: header.column.id, desc }],
