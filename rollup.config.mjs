@@ -20,4 +20,7 @@ export default {
       modules: true,
     }),
   ],
+  external: [
+    '@tanstack/react-table',
+  ]
 };
