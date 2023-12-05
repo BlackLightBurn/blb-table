@@ -8,19 +8,12 @@ BlackLightBurn table component
 npm install --save blb-table
 ```
 
-## Import styles and use react-query
+## Import styles
 
-Install `bootstrap`
-
-```
-npm install --save bootstrap
-```
-
-and import styles in `app.js` and use `QueryClientProvider`.
+Import styles in `app.js`
 
 ```
 import 'blb-table/dist/variables.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App({ Component, pageProps }: any) {
 	return <Component {...pageProps} />;
