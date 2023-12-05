@@ -48,7 +48,7 @@ export const Table = ({
   const [sorting, setSorting] = useState<SortingState>(initialState.sort || []);
   const [openFilters, setOpenFilters] = useState<boolean>(false);
   const table = useReactTable({
-    data: data?.data.slice(0, data.count) ?? [],
+    data: data?.data.map((item) => item) ?? [],
     columns,
     pageCount: data?.count ? Math.ceil(data.count / initialState.limit) : 0,
     state: {
