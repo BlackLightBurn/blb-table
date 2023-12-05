@@ -5,4 +5,7 @@
   --blb-table-light-color: #f0f0ff;
   --blb-table-white-color: #ffffff;
   --blb-table-black-color: #000000;
+
+  --blb-table-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --blb-table-border-width: 1px;
 }

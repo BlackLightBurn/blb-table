@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Table as TableComponent } from 'react-bootstrap';
 
 import { useReactTable, getCoreRowModel, SortingState } from '@tanstack/react-table';
 
@@ -71,11 +70,11 @@ export const Table = ({
 
   let content = (
     <div className={styles.tableWrapper}>
-      <TableComponent>
+      <table>
         <ColGroup template={template} />
         <THead headerGroups={table.getHeaderGroups()} onChange={onChange} />
         <TBody rows={rows} />
-      </TableComponent>
+      </table>
     </div>
   );
 

@@ -1,27 +1,36 @@
 .tableWrapper {
   overflow-x: auto;
   width: 100%;
+  background-color: var(--blb-table-white-color);
 }
 
 .tableWrapper table {
   table-layout: fixed;
   margin-bottom: 0 !important;
   width: 100%;
-  display: table;
+  vertical-align: top;
   caption-side: bottom;
   border-collapse: collapse;
-  vertical-align: top;
+
+  border-color: var(--blb-table-border-color);
+  font-family: var(--blb-table-font-family);
 }
 
+.tableWrapper table tbody,
+.tableWrapper table td,
+.tableWrapper table tfoot,
+.tableWrapper table th,
+.tableWrapper table thead,
 .tableWrapper table tr {
   border-color: inherit;
   border-style: solid;
   border-width: 0;
+  text-align: inherit;
 }
 
 .tableWrapper table > :not(caption) > * > * {
   padding: 0.5rem 0.5rem;
-  color: #000;
-  background-color: white;
-  border-bottom-width: 1px;
+  color: var(--blb-table-black-color);
+  background-color: var(--blb-table-white-color);
+  border-bottom-width: var(--blb-table-border-width);
 }
