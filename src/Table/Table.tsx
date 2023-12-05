@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { useReactTable, getCoreRowModel, SortingState } from '@tanstack/react-table';
 
@@ -30,11 +30,8 @@ interface TableProps {
       setPageIndex: ({ selected }: { selected: number }) => void;
     }) => React.ReactElement;
     EmptyData?: (props: { isLoading: boolean; isEmpty: boolean }) => React.ReactElement;
-    Search?: (props: {
-      resetPagination: () => void;
-      openFilters: () => void;
-    }) => React.ReactElement;
-    Filters: (props: { resetPagination: () => void }) => React.ReactElement;
+    Search?: (props: { openFilters: () => void }) => React.ReactElement;
+    Filters?: () => React.ReactElement;
   };
 }
 
@@ -80,9 +77,7 @@ export const Table = ({
 
   if (isEmpty || isLoading) {
     const title = isLoading ? 'Loading...' : 'No matching results found';
-    const subtitle = isLoading
-      ? 'Please wait'
-      : 'Try adjusting your search or filter to find what you are looking for';
+    const subtitle = isLoading ? 'Please wait' : 'Try adjusting your search or filter to find what you are looking for';
     content = components?.EmptyData ? (
       components.EmptyData({ isLoading, isEmpty })
     ) : (
@@ -110,7 +105,6 @@ export const Table = ({
   const searchComponent = components?.Search ? (
     components.Search({
       openFilters: () => setOpenFilters(!openFilters),
-      resetPagination: () => table.setPageIndex(0),
     })
   ) : (
     <Search
@@ -122,18 +116,18 @@ export const Table = ({
           search: value,
           skip: 0,
         }));
-        table.setPageIndex(0);
       }}
       open={() => setOpenFilters(!openFilters)}
     />
   );
 
+  useEffect(() => {
+    table.setPageIndex(0);
+  }, [initialState.filter, initialState.search]);
   return (
     <>
       {searchComponent}
-      {components?.Filters &&
-        openFilters &&
-        components.Filters({ resetPagination: () => table.setPageIndex(0) })}
+      {components?.Filters && openFilters && components.Filters()}
       {content}
       {table.getPageCount() > 0 && paginationComponent}
     </>

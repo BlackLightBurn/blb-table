@@ -42,17 +42,17 @@ const initialData = {
   data: [
     {
       title: 'One',
-      subcribers: 1000,
+      subscribers: 1000,
       views: 123,
     },
     {
       title: 'Two',
-      subcribers: 2000,
+      subscribers: 2000,
       views: 544,
     },
     {
       title: 'Three',
-      subcribers: 3000,
+      subscribers: 3000,
       views: 56626,
     },
   ],
@@ -123,7 +123,7 @@ export default function Home() {
               }}
             />
           ),
-          Search: ({ resetPagination, openFilters }) => (
+          Search: ({ openFilters }) => (
             <Search
               onChange={(value) => {
                 setQueryParams((prev) => ({
@@ -131,12 +131,11 @@ export default function Home() {
                   search: value,
                   skip: 0,
                 }));
-                resetPagination();
               }}
               openFilters={openFilters}
             />
           ),
-          Filters: ({ resetPagination }) => (
+          Filters: () => (
             <FilterForm
               onSubmit={(data) => {
                 setQueryParams((prev) => ({
@@ -147,7 +146,6 @@ export default function Home() {
                   },
                   skip: 0,
                 }));
-                resetPagination();
               }}
             />
           ),
@@ -275,13 +273,11 @@ export const EmptyData = ({ isLoading, isEmpty }: EmptyDataProps) => {
   > setPageIndex - function for set the page number
 
 - **EmptyData**?: _(props: { isLoading: boolean; isEmpty: boolean }) => React.ReactElement;_
-- **Search**?: _(props: { resetPagination: () => void; openFilters: () => void; }) => React.ReactElement;_
-
-  > resetPagination - for reset pagination on first page
+- **Search**?: _(props: { openFilters: () => void; }) => React.ReactElement;_
 
   > openFilter - open/close filters
 
-- **Filters**?: _(props: { resetPagination: () => void }) => React.ReactElement;_
+- **Filters**?: _() => React.ReactElement;_
 
 ## Contributing
 
