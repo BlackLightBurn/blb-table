@@ -1,6 +1,6 @@
 {
   "name": "blb-table",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "An empty base template for publishing a React TS package to npmjs library.",
   "type": "module",
   "main": "dist/index.js",
