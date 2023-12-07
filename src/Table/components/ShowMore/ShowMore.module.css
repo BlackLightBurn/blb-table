@@ -1,0 +1,10 @@
+.showMore {
+  width: 100%;
+  background-color: var(--blb-table-white-color);
+  color: #7070ff;
+  padding: 16;
+  border-radius: 0 0 12px 12px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
