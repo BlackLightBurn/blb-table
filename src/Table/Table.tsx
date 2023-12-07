@@ -125,11 +125,11 @@ export const Table = ({
     table.setPageIndex(0);
   }, [initialState.filter, initialState.search]);
   return (
-    <>
+    <div className={styles.wrapper}>
       {searchComponent}
       {components?.Filters && openFilters && components.Filters()}
       {content}
       {paginationComponent}
-    </>
+    </div>
   );
 };
