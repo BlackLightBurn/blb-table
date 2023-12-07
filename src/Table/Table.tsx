@@ -14,7 +14,7 @@ import { ColGroup } from './components/ColGroup';
 interface TableProps {
   data: {
     data: Array<object>;
-    count: number;
+    count?: number;
   };
   isLoading: boolean;
   onChange: Dispatch<SetStateAction<QueryParams>>;
@@ -129,7 +129,7 @@ export const Table = ({
       {searchComponent}
       {components?.Filters && openFilters && components.Filters()}
       {content}
-      {table.getPageCount() > 0 && paginationComponent}
+      {paginationComponent}
     </>
   );
 };

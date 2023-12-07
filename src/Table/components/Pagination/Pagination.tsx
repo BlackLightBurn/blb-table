@@ -75,6 +75,7 @@ export const Pagination = ({
     setCurrentPage(initialPage || 0);
   }, [initialPage]);
 
+  if (!_pageCount) return null;
   return (
     <div className={styles.container}>
       <button
